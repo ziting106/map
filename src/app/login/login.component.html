@@ -1,0 +1,77 @@
+<div class="text-center">
+  <img height="80" src="assets/location-red.png" />
+  <h1>登入畫面</h1>
+  <div class="row justify-content-center">
+    <mat-card class="col-md-4 col-sm-8 col-xs-12 py-5">
+      <div class="form">
+        <form
+          class="form login-form"
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="form-field">
+            <mat-form-field appearance="fill">
+              <mat-label>帳號</mat-label>
+              <input matInput formControlName="Account" />
+              <button
+                mat-icon-button
+                matSuffix
+                style="visibility: hidden"
+              ></button>
+              <mat-error>必填</mat-error>
+            </mat-form-field>
+            <div class="form-break"></div>
+            <mat-form-field appearance="fill" class="my-3">
+              <mat-label>密碼</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="Password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-error
+                *ngIf="loginForm.controls['Password'].hasError('required')"
+                >必填</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="form-button">
+            <button
+              mat-stroked-button
+              type="button"
+              color="primary"
+              class="mr-3"
+            >
+              取消
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="!loginForm.valid"
+            >
+              登入
+            </button>
+          </div>
+        </form>
+        <div class="mt-3 color-red-500 text-center">錯誤資訊</div>
+        <div class="mt-4 text-center">
+          <button type="button" mat-button color="warn" (click)="resetMima()">
+            <mat-icon>live_help</mat-icon>
+            <span>忘記密碼?</span>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

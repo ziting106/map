@@ -1,0 +1,43 @@
+<ng-container *ngIf="dialogId.includes('loading')">
+  <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+  <p class="text-center mt-4 mb-0">資料處理中</p>
+</ng-container>
+
+<ng-container *ngIf="!dialogId.includes('loading')">
+  <ng-container [ngSwitch]="dialogData.type">
+    <h2 mat-dialog-title *ngSwitchCase="'Del'">刪除確認</h2>
+    <h2 mat-dialog-title *ngSwitchCase="'MSG'">{{ dialogData.title }}</h2>
+    <h2 mat-dialog-title *ngSwitchCase="'edit'">編輯</h2>
+    <h2 mat-dialog-title *ngSwitchDefault>{{ dialogData.title }}</h2>
+  </ng-container>
+  <mat-dialog-content>
+    <!-- ckeditor -->
+    <div class="ck-content" *ngIf="dialogData.msg == 'ckeditor'">
+      <div #content [innerHTML]="rawHtml"></div>
+    </div>
+    <!-- paragraph -->
+    <p *ngIf="dialogData.msg !== 'ckeditor'">{{ dialogData.msg }}</p>
+    <!-- file -->
+    <!-- <app-file-upload [fileData]="fileData"></app-file-upload> -->
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-button
+      mat-stroked-button
+      color="primary"
+      [mat-dialog-close]="false"
+    >
+      <ng-container *ngIf="dialogData.type !== 'MSG'">取消</ng-container>
+      <ng-container *ngIf="dialogData.type == 'MSG'">關閉</ng-container>
+    </button>
+    <button
+      mat-button
+      mat-raised-button
+      *ngIf="dialogData.type !== 'MSG'"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      確認
+    </button>
+  </mat-dialog-actions>
+</ng-container>
